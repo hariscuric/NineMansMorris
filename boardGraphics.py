@@ -1,5 +1,6 @@
 import graphics as gr
 import NMMclasses as nmmc
+import math as m
 
 
 class boardGraphics:
@@ -57,12 +58,27 @@ class boardGraphics:
 
         self.whitePieces = []
         self.blackPieces = []
+
+        self.text = gr.Text(gr.Point(int(windowWidth/2),40),"")
+        self.text.draw(self.window)
         
 
 
     def getMouse(self):
-        self.window.getMouse()
-        self.getMouse()
+        return self.window.getMouse()
+    
+    def clickedField(self) -> nmmc.field:
+        a = self.getMouse()
+        for i in range(24):
+            b = self.points[i]
+            if m.sqrt((a.getX()-b.getX())**2 + (a.getY()-b.getY())**2)<15:
+                return nmmc.field(nmmc.Circle(i//8), nmmc.Angle(i%8))
+            
+    def topText(self, string : str):
+        self.text.undraw()
+        self.text.setText(string)
+        self.text.draw(self.window)
+        
     
     def drawGame(self, game : nmmc.game):
         for i in self.whitePieces:
@@ -72,12 +88,12 @@ class boardGraphics:
         self.whitePieces = []
         self.blackPieces = []
         for i in game.board.fields:
-            if i.occupancy.name == 'WHITE':
+            if i.occupancy == nmmc.fieldOccupancy.WHITE:
                 self.whitePieces.append(gr.Circle(self.points[i.circle.value*8+i.angle.value],20))
                 self.whitePieces[-1].setFill("white")
                 self.whitePieces[-1].setOutline("gray")
                 self.whitePieces[-1].draw(self.window)
-            if i.occupancy.name == 'BLACK':
+            if i.occupancy == nmmc.fieldOccupancy.BLACK:
                 self.blackPieces.append(gr.Circle(self.points[i.circle.value*8+i.angle.value],20))
                 self.blackPieces[-1].setFill("black")
                 self.blackPieces[-1].setOutline("gray")
