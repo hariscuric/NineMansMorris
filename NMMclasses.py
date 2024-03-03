@@ -77,7 +77,7 @@ class board:
 
     def addWhite(self, i, j) -> bool:
         if self.fields[i*8 + j].occupancy == fieldOccupancy.WHITE or self.fields[i*8 + j].occupancy == fieldOccupancy.BLACK:
-            self.message = "Field occupied, couldn't add white"
+            self.message = "FIELD OCCUPIED, COULDN'T ADD WHITE, TRY AGAIN"
             return False
 
         self.fields[i*8 + j].occupancy = fieldOccupancy.WHITE
@@ -85,7 +85,7 @@ class board:
 
     def addBlack(self, i, j) -> bool:
         if self.fields[i*8 + j].occupancy == fieldOccupancy.WHITE or self.fields[i*8 + j].occupancy == fieldOccupancy.BLACK:
-            self.message = "Field occupied, couldn't add black"
+            self.message = "FIELD OCCUPIED, COULDN'T ADD BLACK, TRY AGAIN"
             return False
 
         self.fields[i*8 + j].occupancy = fieldOccupancy.BLACK
@@ -93,7 +93,7 @@ class board:
     
     def removeWhite(self, i, j) -> bool:
         if self.fields[i*8 + j].occupancy == fieldOccupancy.EMPTY or self.fields[i*8 + j].occupancy == fieldOccupancy.BLACK:
-            self.message = "Field empty or black, couldn't remove white"
+            self.message = "FIELD NOT OCCUPIED BY WHITE STONE, COULDN'T REMOVE STONE, TRY AGAIN"
             return False
         
         #check if all white stones are in mills:
@@ -113,7 +113,7 @@ class board:
             #checking if all the white stones are in mills:
             for m in range(24):
                 if self.fields[m].occupancy.name == "WHITE" and (not m in millIndexes):
-                    self.message = "Cannot remove white stone within a mill when other out-of-mill white stones are available"
+                    self.message = "CANNOT REMOVE WHITE STONE WITHIN A MILL WHEN OTHER OUT-OF-MILL WHITE STONES ARE AVAILABLE, TRY AGAIN"
                     return False
             self.fields[i*8 + j].occupancy = fieldOccupancy.EMPTY
             return True
@@ -122,7 +122,7 @@ class board:
     
     def removeBlack(self, i, j) -> bool:
         if self.fields[i*8 + j].occupancy == fieldOccupancy.EMPTY or self.fields[i*8 + j].occupancy == fieldOccupancy.WHITE:
-            self.message = "Field empty or white, couldn't remove black"
+            self.message = "FIELD NOT OCCUPIED BY BLACK STONE, COULDN'T REMOVE STONE, TRY AGAIN"
             return False
         
         #check if all black stones are in mills:
@@ -142,7 +142,7 @@ class board:
             #checking if all the black stones are in mills:
             for m in range(24):
                 if self.fields[m].occupancy.name == "BLACK" and (not m in millIndexes):
-                    self.message = "Cannot remove black stone within a mill when other out-of-mill black stones are available"
+                    self.message = "CANNOT REMOVE BLACK STONE WITHIN A MILL WHEN OTHER OUT-OF-MILL BLACK STONES ARE AVAILABLE, TRY AGAIN"
                     return False
             self.fields[i*8 + j].occupancy = fieldOccupancy.EMPTY
             return True
@@ -153,10 +153,10 @@ class board:
         a = self.fields[i1*8+j1].occupancy == fieldOccupancy.WHITE
         b = self.fields[i2*8+j2].occupancy == fieldOccupancy.EMPTY
         if not (a and b):
-            self.message = "Unsuccessful white move, start field not white or destination not empty"
+            self.message = "UNSUCCESSFUL WHITE STONE MOVE, START FIELD NEEDS TO BE WHITE AND DESTINATION EMPTY, TRY AGAIN"
             return False
         if not field.isAdjacentField(self.fields[i1*8+j1], self.fields[i2*8+j2]):
-            self.message = "Unsuccessful white move, start and destination fields are not adjacent"
+            self.message = "UNSUCCESSFUL WHITE STONE MOVE, START AND DESTINATION FIELDS NEED TO BE ADJACENT, TRY AGAIN"
             return False
         self.fields[i1*8+j1].occupancy = fieldOccupancy.EMPTY
         self.fields[i2*8+j2].occupancy = fieldOccupancy.WHITE
@@ -166,10 +166,10 @@ class board:
         a = self.fields[i1*8+j1].occupancy == fieldOccupancy.BLACK
         b = self.fields[i2*8+j2].occupancy == fieldOccupancy.EMPTY
         if not (a and b):
-            self.message = "Unsuccessful black move, start field not black or destination not empty"
+            self.message = "UNSUCCESSFUL BLACK STONE MOVE, START FIELD NEEDS TO BE BLACK AND DESTINATION EMPTY, TRY AGAIN"
             return False
         if not field.isAdjacentField(self.fields[i1*8+j1], self.fields[i2*8+j2]):
-            self.message = "Unsuccessful black move, start and destination fields are not adjacent"
+            self.message = "UNSUCCESSFUL BLACK STONE MOVE, START AND DESTINATION FIELDS NEED TO BE ADJACENT, TRY AGAIN"
             return False
         self.fields[i1*8+j1].occupancy = fieldOccupancy.EMPTY
         self.fields[i2*8+j2].occupancy = fieldOccupancy.BLACK
@@ -179,7 +179,7 @@ class board:
         a = self.fields[i1*8+j1].occupancy == fieldOccupancy.WHITE
         b = self.fields[i2*8+j2].occupancy == fieldOccupancy.EMPTY
         if not (a and b):
-            self.message = "Unsuccessful white jump, start field not white or destination not empty"
+            self.message = "UNSUCCESSFUL WHITE STONE JUMP, START FIELD NEEDS TO BE WHITE AND DESTINATION EMPTY, TRY AGAIN"
             return False
         self.fields[i1*8+j1].occupancy = fieldOccupancy.EMPTY
         self.fields[i2*8+j2].occupancy = fieldOccupancy.WHITE
@@ -189,7 +189,7 @@ class board:
         a = self.fields[i1*8+j1].occupancy == fieldOccupancy.BLACK
         b = self.fields[i2*8+j2].occupancy == fieldOccupancy.EMPTY
         if not (a and b):
-            self.message = "Unsuccessful black jump, start field not black or destination not empty"
+            self.message = "UNSUCCESSFUL BLACK STONE JUMP, START FIELD NEEDS TO BE BLACK AND DESTINATION EMPTY, TRY AGAIN"
             return False
         self.fields[i1*8+j1].occupancy = fieldOccupancy.EMPTY
         self.fields[i2*8+j2].occupancy = fieldOccupancy.BLACK
@@ -269,7 +269,7 @@ class game:
         self.CurrentWhiteMills = self.board.WhiteMills()
         self.CurrentBlackMills = self.board.BlackMills()
         self.DoubleMill = False
-        self.message = "Initial stage, white to add stone. Click on field"
+        self.message = "INITIAL STAGE, WHITE TO ADD STONE. CLICK ON AN EMPTY FIELD TO ADD STONE"
 
 
     def progressGame(self,field1 : field, field2=field(Circle(0),Angle(0))) -> bool:
@@ -277,10 +277,10 @@ class game:
         b = self.CurrentBlackMills
 
         if self.outcome == gameOutcome.WHITEWINS:
-            self.message = "Game finished, white has won"
+            self.message = "GAME FINISHED, WHITE HAS WON"
             return False
         if self.outcome == gameOutcome.BLACKWINS:
-            self.message = "Game finished, black has won"
+            self.message = "GAME FINISHED, BLACK HAS WON"
             return False
 
         if self.stage.name == "FIRSTSTAGE":
@@ -334,7 +334,7 @@ class game:
                             self.turn = gameTurn.WHITETURN
                             if self.initialStageCounter==0 and self.board.isWhiteStuck():
                                 self.outcome = gameOutcome.BLACKWINS
-                                self.message = "White stuck, black wins"
+                                self.message = "WHITE STUCK, NO AVAILABLE MOVES, BLACK WINS"
                         return bool
                     self.message = self.board.message
                     return bool
@@ -368,7 +368,7 @@ class game:
                             self.turn = gameTurn.BLACKTURN
                             if self.board.isBlackStuck():
                                 self.outcome = gameOutcome.WHITEWINS
-                                self.message = "Black is Stuck, White wins"
+                                self.message = "BLACK STUCK, NO AVAILABLE MOVES, WHITE WINS"
                         return bool
                     self.message = self.board.message
                     return bool
@@ -386,7 +386,7 @@ class game:
                         self.turn = gameTurn.BLACKTURN
                         if self.board.BlackCount()>3 and self.board.isBlackStuck():
                             self.outcome = gameOutcome.WHITEWINS
-                            self.message = "Black is Stuck, White wins"
+                            self.message = "BLACK STUCK, NO AVAILABLE MOVES, WHITE WINS"
                         return bool
                     self.message = self.board.message
                     return bool
@@ -407,7 +407,7 @@ class game:
                             self.turn = gameTurn.WHITETURN
                             if self.board.isWhiteStuck():
                                 self.outcome = gameOutcome.BLACKWINS
-                                self.message = "White is Stuck, Black wins"
+                                self.message = "WHITE STUCK, NO AVAILABLE MOVES, BLACK WINS"
                         return bool
                     self.message = self.board.message
                     return bool
@@ -425,7 +425,7 @@ class game:
                         self.turn = gameTurn.WHITETURN
                         if self.board.WhiteCount()>3 and self.board.isWhiteStuck():
                             self.outcome = gameOutcome.BLACKWINS
-                            self.message = "White is Stuck, Black wins"
+                            self.message = "WHITE STUCK, NO AVAILABLE MOVES, BLACK WINS"
                         return bool
                     self.message = self.board.message
                     return bool
@@ -482,7 +482,7 @@ class game:
                         self.turn = gameTurn.BLACKTURN
                         if self.board.BlackCount()<3:
                             self.outcome = gameOutcome.WHITEWINS
-                            self.message = "Black has less than 3 stones left, White wins"
+                            self.message = "BLACK HAS LESS THAN 3 STONES LEFT, WHITE WINS"
                         return bool
                     self.message = self.board.message
                     return bool
@@ -537,7 +537,7 @@ class game:
                         self.turn = gameTurn.WHITETURN
                         if self.board.WhiteCount()<3:
                             self.outcome = gameOutcome.BLACKWINS
-                            self.message = "White has less than 3 stones left, Black wins"
+                            self.message = "WHITE HAS LESS THAN 3 STONES LEFT, BLACK WINS"
                         return bool
                     self.message = self.board.message
                     return bool

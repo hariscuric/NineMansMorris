@@ -6,32 +6,51 @@ def main():
     a = game()
     b = boardGraphics()
     b.topText(a.message)
-    while True:
+    loop_condition = 1
+    while loop_condition:
         b.drawGame(a)
-        if a.action == possibleActions.ADDSTONE or a.action == possibleActions.EATSTONE:
-            field1 = b.clickedField()
-            bool = a.progressGame(field1)
-        if a.action == possibleActions.MOVESTONE or a.action == possibleActions.JUMPSTONE:
-            field1 = b.clickedField()
-            field2 = b.clickedField()
-            bool = a.progressGame(field1,field2)
-        if bool:
-            
-            if a.turn == gameTurn.WHITETURN:
-                m1 = "white to play, "
+        currentAction = a.action
+        if a.outcome == gameOutcome.GAMEONGOING:
+            if currentAction == possibleActions.ADDSTONE or currentAction == possibleActions.EATSTONE:
+                field1 = b.clickedField()
+                bool = a.progressGame(field1)
+            if currentAction == possibleActions.MOVESTONE or currentAction == possibleActions.JUMPSTONE:
+                field1 = b.clickedField()
+                field2 = b.clickedField()
+                bool = a.progressGame(field1,field2)
+            if bool:
+
+                
+                if a.turn == gameTurn.WHITETURN:
+                    m1 = "WHITE TO PLAY, "
+                else:
+                    m1 = "BLACK TO PLAY, "
+                if a.action == possibleActions.ADDSTONE:
+                    m2 = "CLICK ON AN EMPTY FIELD TO ADD A STONE"
+                elif a.action == possibleActions.EATSTONE:
+                    m2 = "CLICK ON AN OPPONENT'S STONE TO REMOVE IT"
+                elif a.action == possibleActions.MOVESTONE:
+                    m2 = "CLICK ON A STONE AND AN ADJACENT FIELD TO MOVE IT TO"
+                elif a.action == possibleActions.JUMPSTONE:
+                    m2 = "CLICK ON A STONE AND ANY FREE FIELD TO JUMP TO"
+                b.topText(m1+m2)
             else:
-                m1 = "black to play, "
-            if a.action == possibleActions.ADDSTONE:
-                m2 = "click on an empty field to add a stone"
-            elif a.action == possibleActions.EATSTONE:
-                m2 = "click on an opponent's stone to remove it"
-            elif a.action == possibleActions.MOVESTONE:
-                m2 = "click on a stone and an adjacent field to move it"
-            elif a.action == possibleActions.JUMPSTONE:
-                m2 = "click on a stone and any free field to jump"
-            b.topText(m1+m2)
-        else:
-            b.topText(a.message)
+                b.topText(a.message)
+
+
+        elif a.outcome==gameOutcome.WHITEWINS:
+            b.topText("WHITE WON. Press Esc to exit game")
+            key = b.window.getKey()
+            if key == "Escape":
+                loop_condition = 0
+                b.window.close()
+        elif a.outcome == gameOutcome.BLACKWINS:
+            b.topText("BLACK WON. Press Esc to exit game")
+            key = b.window.getKey()
+            if key == "Escape":
+                loop_condition = 0
+                b.window.close()
+
 
 
 main()
