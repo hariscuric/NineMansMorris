@@ -69,8 +69,8 @@ def computeOptimalAction(game : game, stonecolor : stoneColor, movesAhead : int)
             for j in gamecopy.board.fields:
                 bool = gamecopy.progressGame(i,j)
                 gamecopy = copy.deepcopy(game)
-            if bool:
-                actions.append([i,j])
+                if bool:
+                    actions.append([i,j])
 
     for i in actions:
         gamecopy.progressGame(i[0],i[1])

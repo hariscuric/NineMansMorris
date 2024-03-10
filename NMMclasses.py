@@ -532,7 +532,7 @@ class game:
                             self.DoubleMill = False
                             return bool
                         self.action = possibleActions.MOVESTONE
-                        if self.board.BlackCount()<4:
+                        if self.board.WhiteCount()<4:
                             self.action = possibleActions.JUMPSTONE
                         self.turn = gameTurn.WHITETURN
                         if self.board.WhiteCount()<3:
