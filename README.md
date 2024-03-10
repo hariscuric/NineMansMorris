@@ -12,8 +12,8 @@ To run program, clone the repository and run "python main.py" from the terminal 
 
 
 Two Player Mode Interface:
-![Two Player Mode Interface](/TwoPlayer.png)
+![Two Player Mode Interface](/TwoPlayer.PNG)
 
 
 Single Player Mode Interface:
-![Single Player Mode Interface](/SinglePlayer.png)
+![Single Player Mode Interface](/SinglePlayer.PNG)
