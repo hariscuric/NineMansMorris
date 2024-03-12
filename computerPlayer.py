@@ -35,6 +35,26 @@ def computeHeuristicFunction(game : game, stoneColor : stoneColor) -> int:
 
 
 
+def oneMoveHeuristicFunction(game : game, action) -> int:
+    gamecopy = copy.deepcopy(game)
+    gamecopy.progressGame(action[0], action[1])
+    points = 0
+    if game.turn == gameTurn.WHITETURN:
+        a = game.board.WhiteMills()
+        b = gamecopy.board.WhiteMills()
+        millsCreated = 0
+        for i in range(16):
+            if a[i] == False and b[i] == True:
+                millsCreated = millsCreated+1
+        points = points + millsCreated
+        
+
+
+    return 0
+
+
+
+
 def computeOptimalAction(game : game, stonecolor : stoneColor, movesAhead : int):
     
     if movesAhead == 0:

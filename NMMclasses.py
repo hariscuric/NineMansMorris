@@ -247,8 +247,7 @@ class board:
                     if field.isAdjacentField(self.fields[i],self.fields[j]) == True:
                         if self.fields[j].occupancy == fieldOccupancy.EMPTY:
                             return False
-        return True
-                    
+        return True 
 
 
 
@@ -543,11 +542,128 @@ class game:
                     return bool
 
         return True
+    
+    def nextMoveWhiteMill(self):
+        boolList = [0]
+        boolList = boolList * 16
+        for ii, i in enumerate(self.board.possibleMillIndexes):
+            millOccupancy = 0
+            for j in range(3):
+                if self.board.fields[i[j]].occupancy == fieldOccupancy.WHITE:
+                    millOccupancy = millOccupancy + 1
+            if millOccupancy != 2:
+                continue
+            for j in range(3):
+                if self.board.fields[i[j]].occupancy != fieldOccupancy.WHITE:
+                    missingField = self.board.fields[i[j]]
+            if missingField.occupancy != fieldOccupancy.EMPTY:
+                continue
+            if self.board.WhiteCount() < 4:
+                if self.board.BlackCount()< 4:
+                    boolList[ii] = 1
+                    continue
+                for j in self.board.fields:
+                    if field.isAdjacentField(missingField, j):
+                        if j.occupancy == fieldOccupancy.BLACK:
+                            boolList[ii] = 1
+                            break
+                if boolList[ii] == 1:
+                    continue
+                boolList[ii] = 2
+                continue
+            if self.board.BlackCount() < 4:
+                for j in self.board.fields:
+                    if field.isAdjacentField(missingField, j):
+                        if j.occupancy == fieldOccupancy.WHITE:
+                            boolList[ii] = 1
+                            break
+                continue
+            adjWhiteExists = False
+            adjBlackExists = False
+            for j in self.board.fields:
+                if field.isAdjacentField(missingField, j):
+                    if j.occupancy == fieldOccupancy.WHITE:
+                        adjWhiteExists = True
+                        break
+            for j in self.board.fields:
+                if field.isAdjacentField(missingField, j):
+                    if j.occupancy == fieldOccupancy.BLACK:
+                        adjBlackExists = True
+                        break
+            if adjWhiteExists and adjBlackExists:
+                boolList[ii] = 1
+                continue
+            if adjWhiteExists:
+                boolList[ii] = 2
+        return boolList
+            
+    def nextMoveBlackMill(self):
+            boolList = [0]
+            boolList = boolList * 16
+            for ii, i in enumerate(self.board.possibleMillIndexes):
+                millOccupancy = 0
+                for j in range(3):
+                    if self.board.fields[i[j]].occupancy == fieldOccupancy.BLACK:
+                        millOccupancy = millOccupancy + 1
+                if millOccupancy != 2:
+                    continue
+                for j in range(3):
+                    if self.board.fields[i[j]].occupancy != fieldOccupancy.BLACK:
+                        missingField = self.board.fields[i[j]]
+                if missingField.occupancy != fieldOccupancy.EMPTY:
+                    continue
+                if self.board.BlackCount() < 4:
+                    if self.board.WhiteCount()< 4:
+                        boolList[ii] = 1
+                        continue
+                    for j in self.board.fields:
+                        if field.isAdjacentField(missingField, j):
+                            if j.occupancy == fieldOccupancy.WHITE:
+                                boolList[ii] = 1
+                                break
+                    if boolList[ii] == 1:
+                        continue
+                    boolList[ii] = 2
+                    continue
+                if self.board.WhiteCount() < 4:
+                    for j in self.board.fields:
+                        if field.isAdjacentField(missingField, j):
+                            if j.occupancy == fieldOccupancy.BLACK:
+                                boolList[ii] = 1
+                                break
+                    continue
+                adjBlackExists = False
+                adjWhiteExists = False
+                for j in self.board.fields:
+                    if field.isAdjacentField(missingField, j):
+                        if j.occupancy == fieldOccupancy.BLACK:
+                            adjBlackExists = True
+                            break
+                for j in self.board.fields:
+                    if field.isAdjacentField(missingField, j):
+                        if j.occupancy == fieldOccupancy.WHITE:
+                            adjWhiteExists = True
+                            break
+                if adjBlackExists and adjWhiteExists:
+                    boolList[ii] = 1
+                    continue
+                if adjBlackExists:
+                    boolList[ii] = 2
+            return boolList
+                
 
-        
+                
+                    
+                
+                    
+
+
+                    
 
             
-        
+
+                
+            
 
 
 
