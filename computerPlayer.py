@@ -219,17 +219,18 @@ def computeOptimalActionOptimized(game : game, stonecolor : stoneColor, movesAhe
         oneMoveUtilities.append(a)
 
     for i in range(searchTreeWidth):
-        a = max(oneMoveUtilities)
-        index = random.choice([ii for ii, iii in enumerate(oneMoveUtilities) if iii == a])
-        filteredActions.append(actions.pop(index))
-        oneMoveUtilities.pop(index)
+        if len(oneMoveUtilities)>0:
+            a = max(oneMoveUtilities)
+            index = random.choice([ii for ii, iii in enumerate(oneMoveUtilities) if iii == a])
+            filteredActions.append(actions.pop(index))
+            oneMoveUtilities.pop(index)
 
     actions = filteredActions
 
 
     for i in actions:
         gamecopy.progressGame(i[0],i[1])
-        a = computeOptimalAction(gamecopy,stonecolor,movesAhead-1)
+        a = computeOptimalActionOptimized(gamecopy,stonecolor,movesAhead-1, searchTreeWidth)
         utility = a[0]
         utilities.append(utility)
         gamecopy = copy.deepcopy(game)
